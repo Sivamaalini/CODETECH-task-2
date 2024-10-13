@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_STUDENTS 10
+#define NAME_LENGTH 50
+
+typedef struct {
+    int id;
+    char name[NAME_LENGTH];
+    float grades[5];
+} Student;
+
+Student students[MAX_STUDENTS];
+int student_count = 0;
+
+void add_student() {
+    if (student_count >= MAX_STUDENTS) {
+        printf("Max students reached.\n");
+        return;
+    }
+    Student *s = &students[student_count++];
+    s->id = student_count;
+    printf("Enter name: ");
+    scanf("%s", s->name);
+    printf("Enter 5 grades: ");
+    for (int i = 0; i < 5; i++) {
+        scanf("%f", &s->grades[i]);
+    }
+    printf("Student added.\n");
+}
+
+void display_students() {
+    for (int i = 0; i < student_count; i++) {
+        Student s = students[i];
+        printf("ID: %d, Name: %s, Grades: ", s.id, s.name);
+        for (int j = 0; j < 5; j++) {
+            printf("%.1f ", s.grades[j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int choice;
+    while (1) {
+        printf("\n1. Add Student\n2. Display Students\n3. Exit\nChoice: ");
+        scanf("%d", &choice);
+        if (choice == 1) {
+            add_student();
+        } else if (choice == 2) {
+            display_students();
+        } else if (choice == 3) {
+            break;
+        } else {
+            printf("Invalid choice.\n");
+        }
+    }
+    return 0;
+}
